@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace RPSSL.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]")]
     [ApiController]
     public abstract class ApiControllerBase : ControllerBase
     {

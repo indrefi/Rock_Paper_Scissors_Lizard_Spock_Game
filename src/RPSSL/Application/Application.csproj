@@ -5,15 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Extensions\" />
     <Folder Include="Common\Exceptions\" />
     <Folder Include="Common\Constants\" />
     <Folder Include="Common\Behaviors\" />
-    <Folder Include="Common\Models\" />
     <Folder Include="Common\Validation\Interfaces\" />
     <Folder Include="UseCases\AvailableChoises\Commands\" />
-    <Folder Include="UseCases\ComputerChoise\Commands\" />
-    <Folder Include="UseCases\ComputerChoise\Queries\" />
     <Folder Include="UseCases\PlayGameSinglePlayer\Commands\" />
     <Folder Include="UseCases\PlayGameSinglePlayer\Queries\" />
   </ItemGroup>

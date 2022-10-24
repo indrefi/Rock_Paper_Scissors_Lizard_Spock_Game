@@ -1,4 +1,5 @@
 ﻿using Application.Common.Interfaces;
+using Application.UseCases.AvailableChoises.Queries.GetARandomChoise;
 using Application.UseCases.AvailableChoises.Queries.GetAvailableChoises;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -33,13 +34,14 @@ namespace Persistence
 
         private static void AddHandlers(this IServiceCollection services)
         {
+            services.AddTransient<IGetARandomChoiseQueryHandler, GetARandomChoiseQueryHandler>();
             services.AddTransient<IGetAvailableChoisesQueryHandler, GetAvailableChoisesQueryHandler>();
         }
 
         private static void AddMediatRDependencies(this IServiceCollection services)
         {
             // Available Choises
-
+            services.AddMediatR(typeof(IGetARandomChoiseQueryHandler), typeof(GetARandomChoiseQueryHandler));
             services.AddMediatR(typeof(IGetAvailableChoisesQueryHandler), typeof(GetAvailableChoisesQueryHandler));
         }
     }
