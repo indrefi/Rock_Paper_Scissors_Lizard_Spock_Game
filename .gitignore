@@ -1,0 +1,14 @@
+src/RPSSL/RPSSLDB/obj/
+src/RPSSL/RPSSLDB/bin/Debug/
+src/RPSSL/RPSSL/obj/Debug/
+src/RPSSL/.vs/
+src/RPSSL/Application/obj/
+src/RPSSL/Application/bin/Debug/netcoreapp3.1/Application.deps.json
+src/RPSSL/Infrastructure/bin/
+src/RPSSL/Persistence/bin/
+src/RPSSL/Persistence/obj/
+src/RPSSL/Domain/obj/
+src/RPSSL/Infrastructure/obj/
+src/RPSSL/Domain/bin/
+src/RPSSL/RPSSL/bin/Debug/
+src/RPSSL/RPSSL/obj/
