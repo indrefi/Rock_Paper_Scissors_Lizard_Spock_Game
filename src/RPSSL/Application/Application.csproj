@@ -10,8 +10,9 @@
     <Folder Include="Common\Behaviors\" />
     <Folder Include="Common\Validation\Interfaces\" />
     <Folder Include="UseCases\AvailableChoises\Commands\" />
+    <Folder Include="UseCases\AvailableChoises\PlayGameMultiPlayer\Commands\" />
+    <Folder Include="UseCases\GameResults\Commands\" />
     <Folder Include="UseCases\PlayGameSinglePlayer\Commands\" />
-    <Folder Include="UseCases\PlayGameSinglePlayer\Queries\" />
   </ItemGroup>
 
   <ItemGroup>

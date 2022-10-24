@@ -9,7 +9,7 @@ using Application.UseCases.AvailableChoises.Queries.GetARandomChoise;
 namespace RPSSL.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("choises")]
     public class ChoisesController : ApiControllerBase
     {
         private readonly ILogger<ChoisesController> _logger;
