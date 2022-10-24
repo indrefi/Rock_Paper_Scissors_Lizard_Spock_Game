@@ -4,10 +4,12 @@ using Application.UseCases.AvailableChoises.Queries.GetARandomChoise;
 using Application.UseCases.AvailableChoises.Queries.GetAvailableChoises;
 using Application.UseCases.GameResults.Queries.GetPossibleGameResults;
 using Application.UseCases.PlayGameSinglePlayer.Queries;
+using Application.UseCases.Scoreboard.Commands.AddToScoreboard;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Persistence.ComandHandlers;
 using Persistence.QueryHandlers.AvailableChoises;
 using Persistence.QueryHandlers.GameResults;
 using Persistence.QueryHandlers.PlayGameMultiPlayer;
@@ -51,7 +53,9 @@ namespace Persistence
             services.AddTransient<IGetGameSinglePlayerResultQueryHandler, GetGameSinglePlayerResultQueryHandler>();
             services.AddTransient<IGetGameMultiPlayerResultQueryHandler, GetGameMultiPlayerResultQueryHandler>();
 
-            //Scoreboards         
+            //Scoreboards
+            services.AddTransient<IAddToScoreboardCommandHandler, AddToScoreboardCommandHandler>();
+
 
         }
 
@@ -67,8 +71,9 @@ namespace Persistence
             // Play Single Player
             services.AddMediatR(typeof(IGetGameSinglePlayerResultQueryHandler), typeof(GetGameSinglePlayerResultQueryHandler));
             services.AddMediatR(typeof(IGetGameMultiPlayerResultQueryHandler), typeof(GetGameMultiPlayerResultQueryHandler));
-                        
+
             // Scoreboard
+            services.AddMediatR(typeof(IAddToScoreboardCommandHandler), typeof(AddToScoreboardCommandHandler));
 
         }
     }

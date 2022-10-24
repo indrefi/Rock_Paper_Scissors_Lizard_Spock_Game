@@ -5,6 +5,9 @@ using Application.UseCases.PlayGameSinglePlayer.Queries;
 using Application.UseCases.AvailableChoises.Queries.GetARandomChoise;
 using Application.UseCases.GameResults.Queries.GetPossibleGameResults;
 using System.Linq;
+using Application.UseCases.Scoreboard.Commands.AddToScoreboard;
+using Microsoft.EntityFrameworkCore;
+using Application.Common.Constants;
 
 namespace Persistence.QueryHandlers.PlayGameSinglePlayer
 {
@@ -13,8 +16,12 @@ namespace Persistence.QueryHandlers.PlayGameSinglePlayer
         private readonly ICalculateGameResult _calculateGameResult;
         private readonly IGetARandomChoiseQueryHandler _getARandomChoiseQueryHandler;
         private readonly IGetPossibleGameResultsQueryHandler _getPossibleGameResultsQueryHandler;
-        
+        private readonly IAddToScoreboardCommandHandler _addToScoreboardCommandHandler;
+        private readonly IGameDbContext _context;
+
         public GetGameSinglePlayerResultQueryHandler(
+            IAddToScoreboardCommandHandler addToScoreboardCommandHandler,
+            IGameDbContext context,
             ICalculateGameResult calculateGameResult,
             IGetARandomChoiseQueryHandler getARandomChoiseQueryHandler,
             IGetPossibleGameResultsQueryHandler getPossibleGameResultsQueryHandler)
@@ -22,6 +29,8 @@ namespace Persistence.QueryHandlers.PlayGameSinglePlayer
             _calculateGameResult = calculateGameResult;
             _getARandomChoiseQueryHandler = getARandomChoiseQueryHandler;
             _getPossibleGameResultsQueryHandler = getPossibleGameResultsQueryHandler;
+            _context = context;
+            _addToScoreboardCommandHandler = addToScoreboardCommandHandler;
         }
 
         public async Task<GameSinglePlayerResultDto> Handle(GetGameSinglePlayerResultQuery request, CancellationToken cancellationToken)
@@ -47,7 +56,19 @@ namespace Persistence.QueryHandlers.PlayGameSinglePlayer
                 Results = computedGameResultDto.Name
             };
 
-            //TODO: add connection to scoreboard.
+            var playerOne = await _context.Players.SingleAsync(x => x.Name == PlayerConstants.PlayerOneName, cancellationToken);
+            var computer = await _context.Players.SingleAsync(x => x.Name == PlayerConstants.ComputerName, cancellationToken);
+
+            await _addToScoreboardCommandHandler.Handle(
+                new AddToScoreboardCommand
+                {
+                    PlayerOneId = playerOne.Id,
+                    PlayerTwoId = computer.Id,
+                    PlayerOneChoiseId = request.Player,
+                    PlayerTwoChoiseId = computedGameResultId,
+                    Result = computedGameResultDto.Id
+                },
+                cancellationToken);
 
             return result;
         }

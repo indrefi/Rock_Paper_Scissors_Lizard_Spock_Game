@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 using System.Threading;
 using Application.UseCases.AvailableChoises.PlayGameMultiPlayer.Queries;
 using System.Linq;
+using Application.UseCases.Scoreboard.Commands.AddToScoreboard;
+using Microsoft.EntityFrameworkCore;
+using Application.Common.Constants;
 
 namespace Persistence.QueryHandlers.PlayGameMultiPlayer
 {
@@ -12,13 +15,19 @@ namespace Persistence.QueryHandlers.PlayGameMultiPlayer
     {
         private readonly ICalculateGameResult _calculateGameResult;
         private readonly IGetPossibleGameResultsQueryHandler _getPossibleGameResultsQueryHandler;
+        private readonly IAddToScoreboardCommandHandler _addToScoreboardCommandHandler;
+        private readonly IGameDbContext _context;
 
         public GetGameMultiPlayerResultQueryHandler(
+            IGameDbContext context,
             ICalculateGameResult calculateGameResult,
-            IGetPossibleGameResultsQueryHandler getPossibleGameResultsQueryHandler)
+            IGetPossibleGameResultsQueryHandler getPossibleGameResultsQueryHandler,
+            IAddToScoreboardCommandHandler addToScoreboardCommandHandler)
         {
+            _context = context;
             _calculateGameResult = calculateGameResult;
             _getPossibleGameResultsQueryHandler = getPossibleGameResultsQueryHandler;
+            _addToScoreboardCommandHandler = addToScoreboardCommandHandler;
         }
 
         public async Task<GameMultiPlayerResultDto> Handle(GetGameMultiPlayerResultQuery request, CancellationToken cancellationToken)
@@ -42,7 +51,19 @@ namespace Persistence.QueryHandlers.PlayGameMultiPlayer
                 Results = computedGameResultDto.Name
             };
 
-            //TODO: add connection to scoreboard.
+            var playerOne = await _context.Players.SingleAsync(x => x.Name == PlayerConstants.PlayerOneName, cancellationToken);
+            var playerTwo = await _context.Players.SingleAsync(x => x.Name == PlayerConstants.PlayerTwoName, cancellationToken);
+
+            await _addToScoreboardCommandHandler.Handle(
+                new AddToScoreboardCommand 
+                {
+                    PlayerOneId = playerOne.Id,
+                    PlayerTwoId = playerTwo.Id,
+                    PlayerOneChoiseId = request.PlayerOne,
+                    PlayerTwoChoiseId = request.PlayerTwo,
+                    Result = computedGameResultDto.Id
+                },
+                cancellationToken);
 
             return result;
         }
