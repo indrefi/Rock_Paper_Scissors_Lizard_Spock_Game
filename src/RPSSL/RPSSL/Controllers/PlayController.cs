@@ -22,12 +22,12 @@ namespace RPSSL.Controllers
         /// Play against computer.
         /// </summary>
         /// <returns>return the result of playing against the computer.</returns>
-        [HttpPut()]
+        [HttpPost()]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<GameSinglePlayerResultDto>> PlaySinglePlayer(GameSinglePlayerRequest request) =>
             await Mediator.Send(new GetGameSinglePlayerResultQuery { Player = request.Player });
 
-        [HttpPut("/multi")]
+        [HttpPost("/multi")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<GameMultiPlayerResultDto>> PlayMultiPlayer(GameMultiPlayerRequest request) =>
             await Mediator.Send(new GetGameMultiPlayerResultQuery { PlayerOne = request.PlayerOne,PlayerTwo = request.PlayerTwo });

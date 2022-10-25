@@ -12,3 +12,6 @@ src/RPSSL/Infrastructure/obj/
 src/RPSSL/Domain/bin/
 src/RPSSL/RPSSL/bin/Debug/
 src/RPSSL/RPSSL/obj/
+/src/RPSSL/Application.UnitTest/obj
+/src/RPSSL/Application.UnitTest/bin/Debug/netcoreapp3.1
+/src/RPSSL/Persistence.UnitTest/obj
