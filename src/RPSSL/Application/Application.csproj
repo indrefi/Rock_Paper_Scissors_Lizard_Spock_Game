@@ -5,9 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Exceptions\" />
-    <Folder Include="Common\Behaviors\" />
-    <Folder Include="Common\Validation\Interfaces\" />
     <Folder Include="UseCases\AvailableChoises\Commands\" />
     <Folder Include="UseCases\PlayGameMultiPlayer\Commands\" />
     <Folder Include="UseCases\GameResults\Commands\" />
@@ -22,6 +19,7 @@
     <PackageReference Include="FluentValidation" Version="11.2.2" />
     <PackageReference Include="MediatR" Version="11.0.0" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.17" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>

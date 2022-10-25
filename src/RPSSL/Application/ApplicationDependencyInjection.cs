@@ -1,4 +1,5 @@
-﻿using Application.Common.Interfaces;
+﻿using Application.Common.Behaviors;
+using Application.Common.Interfaces;
 using Application.Common.Services;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,7 @@ namespace Application
         {
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
 
             services.AddTransient<ICalculateGameResult, CalculateGameResult>();
 

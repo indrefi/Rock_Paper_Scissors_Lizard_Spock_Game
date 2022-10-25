@@ -8,6 +8,7 @@ using System.Linq;
 using Application.UseCases.Scoreboard.Commands.AddToScoreboard;
 using Microsoft.EntityFrameworkCore;
 using Application.Common.Constants;
+using Application.Common.Exceptions;
 
 namespace Persistence.QueryHandlers.PlayGameMultiPlayer
 {
@@ -39,7 +40,7 @@ namespace Persistence.QueryHandlers.PlayGameMultiPlayer
 
             if (computedGameResultId < 0)
             {
-                throw new Exception("Unable to calculate the game result.");
+                throw new CalculateGameResultException("Unable to calculate the game result.");
             }
 
             var computedGameResultDto = possibleGameResults.Single(x => x.Id == computedGameResultId);

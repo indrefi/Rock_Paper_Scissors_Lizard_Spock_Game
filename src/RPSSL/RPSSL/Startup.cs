@@ -1,5 +1,9 @@
 using Application;
+using Application.Common.Exceptions;
+using Application.Common.Interfaces;
 using Application.Common.Models;
+using Application.Common.Validation.Interfaces;
+using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -38,7 +42,9 @@ namespace RPSSL
             // adding http client factory.
             services.AddHttpClient();
             
-            services.AddControllers();
+            services.AddControllers().AddFluentValidation(fv => 
+                fv.RegisterValidatorsFromAssemblyContaining<IValidator>());
+
             services.AddSwaggerGen();
         }
 
@@ -55,6 +61,7 @@ namespace RPSSL
                     options.RoutePrefix = string.Empty;
                 });
             }
+            app.UseMiddleware<CustomExceptionHandlerMiddleware>();
 
             app.UseHttpsRedirection();
 
